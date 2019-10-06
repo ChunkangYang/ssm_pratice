@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ruanwenjun.ssm_crm.dao.IEmployeeDao"> 
+
+	<!--查询字典表  -->
+	<select id="findBaseDictByCode" parameterType="String" resultType="User">
+		SELECT dict_item_name,dict_id from base_dict where dict_type_code = #{code}	
+	</select>
+	
+	<!--条件查询总数  -->
+	<select id="selectTotalCountByQueryVo" parameterType="QueryVo" resultType="User">
+		SELECT count(*) from user
+		<where>
+			<if test="cust_name != null and cust_name !=''">
+				cust_name like "%"#{cust_name}"%"
+			</if>
+			<if test="cust_source != null and cust_source !=''">
+				AND cust_source = #{cust_source}
+			</if>
+			<if test="cust_industry != null and cust_industry !=''">
+				AND cust_industry = #{cust_industry}
+			</if>
+			<if test="cust_level != null and cust_level !=''">
+				AND cust_level = #{cust_level}
+			</if>
+		</where>
+	</select>
+	
+	<!--条件查询列表  -->
+	<select id="selectEmployeeListByQueryVo" parameterType="QueryVo" resultType="User">
+		SELECT * from Employee
+		<where>
+			<if test="cust_name != null and cust_name !=''">
+				cust_name like "%"#{cust_name}"%"
+			</if>
+			<if test="cust_source != null and cust_source !=''">
+				AND cust_source = #{cust_source}
+			</if>
+			<if test="cust_industry != null and cust_industry !=''">
+				AND cust_industry = #{cust_industry}
+			</if>
+			<if test="cust_level != null and cust_level !=''">
+				AND cust_level = #{cust_level}
+			</if>
+		</where>
+		LIMIT #{start},#{rows}
+	</select>
+	
+	<!--根据ID查询客户  -->
+	<select id="findEmployeeById" parameterType="Integer" resultType="User">
+		SELECT * FROM employee WHERE cust_id = #{id}
+	</select>
+	
+	<!--更新客户  -->
+	<update id="saveEdit" parameterType="User" >
+		UPDATE user 
+		<set>
+			name = #{name},
+			manager_id = #{manager_id},
+		    insurance = #{insurance},
+			nyusha_date = #{nyusha_date},
+			taisha_date = #{taisha_date},
+		</set>
+		WHERE cust_id = #{cust_id}
+	</update>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ruanwenjun.ssm_crm.dao.ILoginDao"> 
+
+	<!--查询字典表  -->
+	<select id="findUserinfo" parameterType="String" resultType="User">
+		SELECT user_id, password from User where user_id = #{userId} and password = #{password}	
+	</select>
+		
+</mapper>
